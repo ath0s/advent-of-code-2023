@@ -12,6 +12,16 @@ internal fun String.asPath() =
 internal fun <T> KClass<*>.newInstance(): T =
     constructors.filterIsInstance<KFunction<T>>().first().call()
 
+
+fun Regex.findOverlapping(input: CharSequence, startIndex: Int = 0): Sequence<MatchResult> {
+    if (startIndex < 0 || startIndex > input.length) {
+        throw IndexOutOfBoundsException("Start index out of bounds: $startIndex, input length: ${input.length}")
+    }
+    return input.indices.asSequence().mapNotNull { index ->
+        find(input, index)
+    }
+}
+
 fun <T, R> Iterable<T>.mapToSet(transform: (T) -> R): Set<R> =
     mapTo(mutableSetOf(), transform)
 

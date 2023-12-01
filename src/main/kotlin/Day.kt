@@ -9,16 +9,16 @@ interface Day {
 
     abstract class Main(@Language("file-reference") private val filename: String) {
 
-        fun main() {
+        fun main(verbose: Boolean = false) {
             val day = Day()
 
             println(day::class.simpleName)
 
-            measureTimedValue { day.partOne(filename) }.run {
+            measureTimedValue { day.partOne(filename, verbose) }.run {
                 println("Part One: $value\t($duration)")
             }
 
-            measureTimedValue { day.partTwo(filename) }.run {
+            measureTimedValue { day.partTwo(filename, verbose) }.run {
                 println("Part Two: $value\t($duration)")
             }
 

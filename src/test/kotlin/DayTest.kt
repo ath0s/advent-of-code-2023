@@ -4,7 +4,8 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 abstract class DayTest<D : Day>(
-    @Language("file-reference") protected val filename: String? = null
+    @Language("file-reference") protected val filenamePartOne: String? = null,
+    @Language("file-reference") protected val filenamePartTwo: String? = filenamePartOne
 ) {
 
     open val partOneExpected: Any? = null
@@ -14,20 +15,20 @@ abstract class DayTest<D : Day>(
 
     @Test
     open fun `Part One`() {
-        assumeNotNull(filename)
+        assumeNotNull(filenamePartOne)
         assumeNotNull(partOneExpected)
 
-        val result = target.partOne(filename, true)
+        val result = target.partOne(filenamePartOne, true)
 
         assertEquals(partOneExpected, result)
     }
 
     @Test
     open fun `Part Two`() {
-        assumeNotNull(filename)
+        assumeNotNull(filenamePartTwo)
         assumeNotNull(partTwoExpected)
 
-        val result = target.partTwo(filename, true)
+        val result = target.partTwo(filenamePartTwo, true)
 
         assertEquals(partTwoExpected, result)
     }
