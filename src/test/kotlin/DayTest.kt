@@ -5,8 +5,9 @@ import kotlin.test.assertEquals
 
 abstract class DayTest<D : Day>(
     @Language("file-reference") protected val filenamePartOne: String? = null,
-    @Language("file-reference") protected val filenamePartTwo: String? = filenamePartOne
+    @Language("file-reference") protected val filenamePartTwo: String? = null,
 ) {
+    constructor(filename: String):this(filename, filename)
 
     open val partOneExpected: Any? = null
     open val partTwoExpected: Any? = null
