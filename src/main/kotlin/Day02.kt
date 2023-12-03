@@ -1,16 +1,18 @@
 import kotlin.io.path.readLines
 
+private val GAME_PATTERN = Regex("""Game (\d+): """)
+private val COLOR_PATTERN = Regex("""(\d+) (red|green|blue)""")
+
 class Day02 : Day {
-    private val gamePattern = Regex("""Game (\d+): """)
-    private val colorPattern = Regex("""(\d+) (red|green|blue)""")
 
     override fun partOne(filename: String, verbose: Boolean): Any {
         val games = filename.asPath().readLines()
             .map { line -> line.parseGame() }
             .filter { game ->
-                game.grabs.none {grab ->
+                game.grabs.none { grab ->
                     grab.red > 12 || grab.green > 13 || grab.blue > 14
-            }}
+                }
+            }
 
         return games.sumOf { it.id }
     }
@@ -28,13 +30,13 @@ class Day02 : Day {
     }
 
     private fun String.parseGame() : Game  {
-        val gamePart = gamePattern.find(this)!!
+        val gamePart = GAME_PATTERN.find(this)!!
         val gameNumber = gamePart.groups[1]!!.value.toInt()
         val grabs = substring(gamePart.range.last + 1)
             .split("; ")
             .map { grab ->
                 val colors = grab.split(", ").associate {
-                    val (amount, color) = colorPattern.find(it)!!.destructured
+                    val (amount, color) = COLOR_PATTERN.find(it)!!.destructured
                     color to amount.toInt()
                 }
                 Grab(
