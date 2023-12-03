@@ -14,11 +14,14 @@ val <T> Matrix<T>.x get() =
 val <T> Matrix<T>.y get() =
     indices
 
-fun String.parseMatrix(): Matrix<Int> =
+internal inline fun <reified T> String.parseMatrix(charTransformer: (Char) -> T): Matrix<T> =
     asPath()
         .readLines()
-        .map { line -> line.map { char -> char.digitToInt() }.toTypedArray() }
+        .map { it.map(charTransformer).toTypedArray() }
         .toTypedArray()
+
+fun String.parseMatrix(): Matrix<Int> =
+    parseMatrix { it.digitToInt() }
 
 fun <T> Matrix<T>.getOrthogonalNeighbors(coordinate: Coordinate) =
     listOf(
@@ -34,6 +37,13 @@ fun <T> Matrix<T>.getAllNeighbors(coordinate: Coordinate) =
             Coordinate(x, y)
         }
     }.filter { it != coordinate }.filter { it in this }
+
+fun <T> Matrix<T>.getAllNeighbors(partialRow: PartialRow) =
+    (partialRow.y - 1..partialRow.y + 1).flatMap { y ->
+        (partialRow.xRange.first - 1..partialRow.xRange.last + 1).map { x ->
+            Coordinate(x, y)
+        }
+    }.filter { it !in partialRow }.filter { it in this }
 
 fun <T> Matrix<T>.getAllAbove(coordinate: Coordinate) =
     (this.y.first until coordinate.y).reversed().map { y -> Coordinate(coordinate.x, y) }
@@ -114,3 +124,12 @@ fun <T> Matrix<T>.switch(from: Coordinate, to: Coordinate) {
 
 fun manhattanDistance(c1: Coordinate, c2: Coordinate): Int =
     abs(c1.y - c2.y) + abs(c1.x - c2.x)
+
+data class PartialRow(val y: Int, val xRange: IntRange) {
+    operator fun contains(coordinate: Coordinate) =
+        coordinate.y == y && coordinate.x in xRange
+}
+
+operator fun Matrix<Char>.get(partialRow: PartialRow) =
+    get(partialRow.y).toCharArray().concatToString().substring(partialRow.xRange)
+
