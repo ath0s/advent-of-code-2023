@@ -2,7 +2,7 @@ import kotlin.io.path.readLines
 import kotlin.math.pow
 
 private val CARD_NUMBER_PATTERN = Regex("""Card\s+(\d+):""")
-private val NUMBER_PATTERN = Regex("""(\d+)""")
+private val NUMBER_PATTERN = Regex("""\d+""")
 
 class Day04: Day {
     override fun partOne(filename: String, verbose: Boolean): Int =
@@ -27,9 +27,9 @@ class Day04: Day {
             .map { line ->
                 val cardNumberMatch = CARD_NUMBER_PATTERN.find(line)!!
                 val (numbersPart, winningNumbersPart) = line.substring(cardNumberMatch.range.last + 1).split("|")
-                val numbers = NUMBER_PATTERN.findAll(numbersPart).map { it.groups[1]!!.value.toInt() }.toList()
+                val numbers = NUMBER_PATTERN.findAll(numbersPart).map { it.value.toInt() }.toList()
                 val winningNumbers =
-                    NUMBER_PATTERN.findAll(winningNumbersPart).map { it.groups[1]!!.value.toInt() }.toSet()
+                    NUMBER_PATTERN.findAll(winningNumbersPart).map { it.value.toInt() }.toSet()
                 val numberOfMatches = numbers.count { it in winningNumbers }
                 Card(cardNumberMatch.groups[1]!!.value.toInt(), numberOfMatches)
             }
