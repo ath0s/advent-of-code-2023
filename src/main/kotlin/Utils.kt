@@ -48,4 +48,13 @@ fun Iterable<Long>.lcm(): Long {
     }
 }
 
+tailrec fun gcd(a: Long, b: Long): Long =
+    if (b == 0L) {
+        a
+    } else {
+        gcd(b, a % b)
+    }
+
+fun lcm(a: Long, b: Long): Long = a * b / gcd(a, b)
+
 operator fun <T> List<T>.component6(): T = get(5)
