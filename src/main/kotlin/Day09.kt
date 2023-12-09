@@ -1,7 +1,5 @@
 import kotlin.io.path.readLines
 
-private val NUMBER_PATTERN = Regex("""-?\d+""")
-
 class Day09: Day {
     override fun partOne(filename: String, verbose: Boolean): Long {
         val histories = parseHistories(filename)
@@ -33,7 +31,7 @@ class Day09: Day {
 
     private fun parseHistories(filename: String) =
         filename.asPath().readLines()
-            .map { line -> NUMBER_PATTERN.findAll(line).map { it.value.toLong() }.toList() }
+            .map { line -> line.split(' ').map { it.toLong() } }
 
     private fun List<Long>.resolveNext(): Long =
         if (all { it == 0L }) {
@@ -55,6 +53,6 @@ class Day09: Day {
 
     companion object : Day.Main("Day09.txt") {
         @JvmStatic
-        fun main(args: Array<String>) = main(true)
+        fun main(args: Array<String>) = main()
     }
 }
