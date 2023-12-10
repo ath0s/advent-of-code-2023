@@ -14,6 +14,9 @@ val <T> Matrix<T>.x get() =
 val <T> Matrix<T>.y get() =
     indices
 
+/**
+ * Interpret [this] as a filename and parse its contents to a matrix
+ */
 internal inline fun <reified T> String.parseMatrix(charTransformer: (Char) -> T): Matrix<T> =
     asPath()
         .readLines()
@@ -56,6 +59,18 @@ fun <T> Matrix<T>.getAllLeft(coordinate: Coordinate) =
 
 fun <T> Matrix<T>.getAllRight(coordinate: Coordinate) =
     (coordinate.x + 1..this.x.last).map { x -> Coordinate(x, coordinate.y) }
+
+fun <T> Matrix<T>.print(toChar: (T) -> Char, highlight: (Coordinate) -> Boolean) =
+    forEachIndexed { y: Int, row: Array<T> ->
+        row.forEachIndexed { x, value ->
+            if (highlight(Coordinate(x, y))) {
+                print("$WHITE_BOLD_BRIGHT${toChar(value)}$RESET")
+            } else {
+                print(toChar(value))
+            }
+        }
+        println()
+    }
 
 fun <T> Matrix<T>.print(highlight: (Coordinate) -> Boolean) =
     forEachIndexed { y: Int, row: Array<T> ->
@@ -125,6 +140,17 @@ fun <T> Matrix<T>.switch(from: Coordinate, to: Coordinate) {
 fun manhattanDistance(c1: Coordinate, c2: Coordinate): Int =
     abs(c1.y - c2.y) + abs(c1.x - c2.x)
 
+fun <T> Matrix<T>.find(predicate: (T) -> Boolean): Coordinate? {
+    for ((y, row) in withIndex()) {
+        row.forEachIndexed { x, value ->
+            if (predicate(value)) {
+                return Coordinate(x, y)
+            }
+        }
+    }
+    return null
+}
+
 data class PartialRow(val y: Int, val xRange: IntRange) {
     operator fun contains(coordinate: Coordinate) =
         coordinate.y == y && coordinate.x in xRange
@@ -132,4 +158,3 @@ data class PartialRow(val y: Int, val xRange: IntRange) {
 
 operator fun Matrix<Char>.get(partialRow: PartialRow) =
     get(partialRow.y).toCharArray().concatToString().substring(partialRow.xRange)
-
