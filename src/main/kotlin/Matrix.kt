@@ -140,6 +140,9 @@ fun <T> Matrix<T>.switch(from: Coordinate, to: Coordinate) {
 fun manhattanDistance(c1: Coordinate, c2: Coordinate): Int =
     abs(c1.y - c2.y) + abs(c1.x - c2.x)
 
+fun manhattanDistance(c1: Pair<Long, Long>, c2: Pair<Long, Long>): Long =
+    abs(c1.second - c2.second) + abs(c1.first - c2.first)
+
 fun <T> Matrix<T>.find(predicate: (T) -> Boolean): Coordinate? {
     for ((y, row) in withIndex()) {
         row.forEachIndexed { x, value ->
