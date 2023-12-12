@@ -38,7 +38,7 @@ class Day07 : Day {
             }.sum()
     }
 
-    private data class Hand(
+    private class Hand(
         val cards: CharArray,
         val bet: Int,
         private val jokerWildcard: Boolean = false
