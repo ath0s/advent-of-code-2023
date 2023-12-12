@@ -1,0 +1,32 @@
+name: Qodana
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  qodana:
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      pull-requests: write
+      security-events: write
+    steps:
+      - name: 🚚 Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}  # to check out the actual pull request commit, not the merge commit
+          fetch-depth: 0  # a full history is required for pull request analysis
+
+      - name: 🕵️ Qodana - Code Inspection
+        uses: JetBrains/qodana-action@v2023.3.0
+        with:
+          cache-default-branch-only: true
+
+      - name: 💹 Upload results to GitHub code scanning
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: ${{ runner.temp }}/qodana/results/qodana.sarif.json
