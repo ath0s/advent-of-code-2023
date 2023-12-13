@@ -8,7 +8,7 @@ class Day11: Day {
         shortestPathBetweenGalaxies(filename, 999_999)
 
     private fun shortestPathBetweenGalaxies(filename: String, expansion: Long): Long {
-        val matrix = filename.parseMatrix { it }
+        val matrix = filename.asPath().parseMatrix { it }
 
         val expandedRows = matrix.expandedRows()
         val expandedColumns = matrix.expandedColumns()

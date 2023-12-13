@@ -52,7 +52,7 @@ class Day10 : Day {
     private val verticalPipes = setOf(Pipe.NORTH_SOUTH, Pipe.NORTH_EAST, Pipe.NORTH_WEST)
 
     private fun parseMaze(@Language("file-reference") filename: String) =
-        filename.parseMatrix { char ->
+        filename.asPath().parseMatrix { char ->
             enumValues<Pipe>().first { it.symbol == char }
         }
 

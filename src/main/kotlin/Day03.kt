@@ -4,7 +4,7 @@ private val NUMBER_PATTERN = Regex("""\d+""")
 
 class Day03 : Day {
     override fun partOne(filename: String, verbose: Boolean): Int {
-        val matrix = filename.parseMatrix { it }
+        val matrix = filename.asPath().parseMatrix { it }
         return filename.asPath().readLines()
             .flatMapIndexed { y, line ->
                 NUMBER_PATTERN.findAll(line)
@@ -18,7 +18,7 @@ class Day03 : Day {
     }
 
     override fun partTwo(filename: String, verbose: Boolean): Any {
-        val matrix = filename.parseMatrix { it }
+        val matrix = filename.asPath().parseMatrix { it }
         val numbers = filename.asPath().readLines()
             .flatMapIndexed { y, line ->
                 NUMBER_PATTERN.findAll(line)

@@ -1,5 +1,6 @@
 import AnsiColor.RESET
 import AnsiColor.WHITE_BOLD_BRIGHT
+import java.nio.file.Path
 import kotlin.io.path.readLines
 import kotlin.math.abs
 
@@ -17,14 +18,18 @@ val <T> Matrix<T>.y get() =
 /**
  * Interpret [this] as a filename and parse its contents to a matrix
  */
-internal inline fun <reified T> String.parseMatrix(charTransformer: (Char) -> T): Matrix<T> =
-    asPath()
-        .readLines()
+internal inline fun <reified T> Path.parseMatrix(charTransformer: (Char) -> T): Matrix<T> =
+        readLines()
         .map { it.map(charTransformer).toTypedArray() }
         .toTypedArray()
 
-fun String.parseMatrix(): Matrix<Int> =
-    parseMatrix { it.digitToInt() }
+internal inline fun <reified T> String.parseMatrix(charTransformer: (Char) -> T): Matrix<T> =
+    lines()
+        .map { it.map(charTransformer).toTypedArray() }
+        .toTypedArray()
+
+fun String.parseMatrix() =
+    parseMatrix { it }
 
 fun <T> Matrix<T>.getOrthogonalNeighbors(coordinate: Coordinate) =
     listOf(
@@ -161,3 +166,11 @@ data class PartialRow(val y: Int, val xRange: IntRange) {
 
 operator fun Matrix<Char>.get(partialRow: PartialRow) =
     get(partialRow.y).toCharArray().concatToString().substring(partialRow.xRange)
+
+inline fun <reified T> Matrix<T>.rotate(): Matrix<T> =
+    first().indices.reversed().map { x ->
+        indices.map { y -> this[y][x] }.toTypedArray()
+    }.toTypedArray()
+
+fun <T> Matrix<T>.asString() =
+    joinToString("\n") { row -> row.joinToString("") { it.toString() } }
