@@ -27,6 +27,6 @@ jobs:
           cache-default-branch-only: true
 
       - name: 💹 Upload results to GitHub code scanning
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: ${{ runner.temp }}/qodana/results/qodana.sarif.json
