@@ -174,3 +174,8 @@ inline fun <reified T> Matrix<T>.rotate(): Matrix<T> =
 
 fun <T> Matrix<T>.asString() =
     joinToString("\n") { row -> row.joinToString("") { it.toString() } }
+
+inline fun <reified T> Matrix<T>.copy() =
+    Array(size) {
+        this[it].copyOf()
+    }
