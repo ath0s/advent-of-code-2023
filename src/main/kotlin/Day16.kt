@@ -1,4 +1,7 @@
-import Day16.Direction.*
+import Direction.DOWN
+import Direction.LEFT
+import Direction.RIGHT
+import Direction.UP
 
 class Day16 : Day {
     override fun partOne(filename: String, verbose: Boolean): Int {
@@ -21,13 +24,6 @@ class Day16 : Day {
             matrix.countEnergized(Coordinate(x, matrix.y.last), UP, verbose)
         }
         return maxOf(fromLeft, fromTop, fromRight, fromBottom)
-    }
-
-    private enum class Direction(val move: (Coordinate) -> Coordinate) {
-        UP(Coordinate::up),
-        DOWN(Coordinate::down),
-        LEFT(Coordinate::left),
-        RIGHT(Coordinate::right)
     }
 
     private val tiles = mapOf<Char, (Direction) -> List<Direction>>(
