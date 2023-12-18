@@ -2,7 +2,6 @@ import AnsiColor.RESET
 import AnsiColor.WHITE_BOLD_BRIGHT
 import java.nio.file.Path
 import kotlin.io.path.readLines
-import kotlin.math.abs
 
 typealias Matrix<T> = Array<Array<T>>
 
@@ -141,12 +140,6 @@ fun <T> Matrix<T>.switch(from: Coordinate, to: Coordinate) {
     this[to] = this[from]
     this[from] = old
 }
-
-fun manhattanDistance(c1: Coordinate, c2: Coordinate): Int =
-    abs(c1.y - c2.y) + abs(c1.x - c2.x)
-
-fun manhattanDistance(c1: Pair<Long, Long>, c2: Pair<Long, Long>): Long =
-    abs(c1.second - c2.second) + abs(c1.first - c2.first)
 
 fun <T> Matrix<T>.find(predicate: (T) -> Boolean): Coordinate? {
     for ((y, row) in withIndex()) {

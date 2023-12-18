@@ -1,3 +1,5 @@
+import kotlin.math.abs
+
 data class Coordinate(
     val x: Int,
     val y: Int
@@ -19,3 +21,6 @@ fun Coordinate.left() =
 
 fun Coordinate.right() =
     copy(x = x + 1)
+
+fun manhattanDistance(c1: Coordinate, c2: Coordinate): Int =
+    abs(c1.y - c2.y) + abs(c1.x - c2.x)

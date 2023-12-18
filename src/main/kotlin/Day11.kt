@@ -1,4 +1,4 @@
-import java.util.*
+import java.util.SortedSet
 
 class Day11: Day {
     override fun partOne(filename: String, verbose: Boolean): Long =
@@ -26,7 +26,7 @@ class Day11: Day {
 
         return pairs
             .map { (first, second) -> first.adjust() to second.adjust() }
-            .sumOf { (first, second) -> manhattanDistance(first, second) }
+            .sumOf { (first, second) -> first manhattanDistance second }
     }
 
     private fun Matrix<Char>.expandedRows() : SortedSet<Int> =
@@ -40,7 +40,7 @@ class Day11: Day {
         }
 
     private fun Coordinate.adjust(expandedRows: SortedSet<Int>, expandedColumns: SortedSet<Int>, expansion: Long) =
-        x + (expandedColumns.headSet(x).size * expansion) to y + (expandedRows.headSet(y).size * expansion)
+        LongCoordinate(x + (expandedColumns.headSet(x).size * expansion), y + (expandedRows.headSet(y).size * expansion))
 
     companion object : Day.Main("Day11.txt") {
         @JvmStatic
