@@ -34,6 +34,12 @@ inline fun <T, R> Iterable<T>.flatMapToSet(transform: (T) -> Iterable<R>): Set<R
 fun <T> Iterable<Iterable<T>>.flattenToSet(): Set<T> =
     flatMapToSet { it }
 
+fun <T> Iterable<T>.filterToSet(predicate: (T) -> Boolean): Set<T> =
+    filterTo(mutableSetOf(), predicate)
+
+fun <T> Set<T>.filter(predicate: (T) -> Boolean): Set<T> =
+    filterToSet(predicate)
+
 private fun String.asResourceUrl() =
     Thread.currentThread().contextClassLoader.getResource(this)
 

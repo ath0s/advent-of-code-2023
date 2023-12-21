@@ -14,6 +14,11 @@ val <T> Matrix<T>.x get() =
 val <T> Matrix<T>.y get() =
     indices
 
+val <T> Matrix<T>.height
+    get() = size
+
+val <T> Matrix<T>.width
+    get() = first().size
 /**
  * Interpret [this] as a filename and parse its contents to a matrix
  */
