@@ -5,6 +5,9 @@ import kotlin.io.path.readLines
 
 typealias Matrix<T> = Array<Array<T>>
 
+inline fun <reified T> Matrix(xSize: Int, ySize: Int, init: (Coordinate) -> T): Matrix<T> =
+    Array(ySize) { y -> Array(xSize) { x -> init(Coordinate(x, y)) } }
+
 val <T> Matrix<T>.length get() =
     size * get(0).size
 
