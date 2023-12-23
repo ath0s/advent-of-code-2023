@@ -40,6 +40,9 @@ fun <T> Iterable<T>.filterToSet(predicate: (T) -> Boolean): Set<T> =
 fun <T> Set<T>.filter(predicate: (T) -> Boolean): Set<T> =
     filterToSet(predicate)
 
+fun <K, V> Iterable<Pair<K, V>>.toMutableMap() =
+    toMap(mutableMapOf())
+
 private fun String.asResourceUrl() =
     Thread.currentThread().contextClassLoader.getResource(this)
 

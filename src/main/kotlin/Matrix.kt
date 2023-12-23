@@ -126,6 +126,18 @@ fun <T> Matrix<T>.filterIndexed(predicate: (Coordinate, T) -> Boolean) =
         }
     }
 
+fun <T> Matrix<T>.first(predicate: (T) -> Boolean): Coordinate =
+    mapIndexed { y, row ->
+        val x = row.indexOfFirst(predicate)
+        Coordinate(x, y)
+    }.first()
+
+fun <T> Matrix<T>.last(predicate: (T) -> Boolean): Coordinate =
+    mapIndexed { y, row ->
+        val x = row.indexOfLast(predicate)
+        Coordinate(x, y)
+    }.last()
+
 fun <T> Matrix<T>.update(coordinate: Coordinate, transform: (T) -> T) {
     val previous = get(coordinate)
     set(coordinate, transform(previous))
