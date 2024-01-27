@@ -24,7 +24,7 @@ jobs:
           distribution: 'temurin'
 
       - name: 🐘 Setup Gradle
-        uses: actions/setup-gradle@v3
+        uses: gradle/actions/setup-gradle@v3
         with:
           dependency-graph: generate-and-submit
           add-job-summary: on-failure
@@ -32,13 +32,6 @@ jobs:
 
       - name: 🛠 Build
         run: ./gradlew build --scan
-
-      - name: 📋 Upload build reports
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: build-reports
-          path: build/reports/
 
       - name: 💹 Publish Test Report
         if: always()
@@ -49,3 +42,10 @@ jobs:
           reporter: 'java-junit'
           list-suites: 'failed'
           list-tests: 'failed'
+
+      - name: 📋 Upload build reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: build-reports
+          path: build/reports/
