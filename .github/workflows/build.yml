@@ -24,14 +24,21 @@ jobs:
           distribution: 'temurin'
 
       - name: 🐘 Setup Gradle
-        uses: gradle/gradle-build-action@v2
+        uses: actions/setup-gradle@v3
         with:
           dependency-graph: generate-and-submit
-          generate-job-summary: false
+          add-job-summary: on-failure
           gradle-home-cache-cleanup: true
 
       - name: 🛠 Build
         run: ./gradlew build --scan
+
+      - name: 📋 Upload build reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: build-reports
+          path: build/reports/
 
       - name: 💹 Publish Test Report
         if: always()
