@@ -23,7 +23,7 @@ dependencies {
 tasks {
 
     wrapper {
-        gradleVersion = "8.5"
+        gradleVersion = "8.6"
     }
 
     withType<JavaCompile> {
