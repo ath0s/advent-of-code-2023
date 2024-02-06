@@ -13,7 +13,7 @@ dependencies {
     implementation(kotlin("reflect"))
     implementation("org.jgrapht:jgrapht-core:1.5.2")
 
-    testImplementation(platform("org.junit:junit-bom:5.10.1"))
+    testImplementation(platform("org.junit:junit-bom:5.10.2"))
     testImplementation("org.junit.jupiter:junit-jupiter-params")
     testImplementation(kotlin("test"))
 
