@@ -24,7 +24,7 @@ jobs:
           distribution: 'temurin'
 
       - name: 🐘 Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
+        uses: gradle/actions/setup-gradle@v321
         with:
           dependency-graph: generate-and-submit
           add-job-summary: on-failure
